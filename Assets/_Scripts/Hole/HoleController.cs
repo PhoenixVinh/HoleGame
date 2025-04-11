@@ -2,16 +2,24 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using _Scripts.Hole;
+using DG.Tweening;
 using Unity.VisualScripting;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
+
+
+public enum SpecialSkill
+{
+    IncreaseRange = 0, 
+    Magnet = 1,
+    Direction = 2, 
+    FreezeColdown = 3,
+}
+
 
 public class HoleController : MonoBehaviour
 {
     public static HoleController Instance;
-    
-    
-    
-    
     
     [Header("Variables")]
     public float _speedMovement;
@@ -28,6 +36,9 @@ public class HoleController : MonoBehaviour
 
     private HoleLevel _holeLevel;
     public HoleLevel HoleLevel => _holeLevel;
+
+
+    private HoleSpecialSkill _holeSpecialSkill;
     
     private void Awake()
     {
@@ -35,6 +46,7 @@ public class HoleController : MonoBehaviour
         _holeMovement = GetComponent<HoleMovement>();
         _blackHole = GetComponent<BlackHole>();
         _holeLevel = GetComponent<HoleLevel>();
+        _holeSpecialSkill = GetComponent<HoleSpecialSkill>();
         SetData();
     }
 
@@ -57,12 +69,38 @@ public class HoleController : MonoBehaviour
         Vector3 localScale = transform.localScale;
         Vector3 newScale = new Vector3(radius, localScale.y, radius);
         // Update Scale of Hole 
-        this.transform.localScale = newScale;
-        this._blackHole.changeInitialScale(this.transform.localScale.x);
+
+
+
+        this.transform.DOScale(newScale, 1f).OnUpdate(
+            () =>  OnUpLevelHole());
+       
+        
         this._holeLevel.SetData(amountExp);
     }
     
     
     
     
+    
+    
+    
+    
+
+    public void ProcessSkill(int index)
+    {
+        SpecialSkill skill = (SpecialSkill)index;
+
+        this._holeSpecialSkill.ProcessSkill(skill);
+
+    }
+
+    public float GetCurrentScale()
+    {
+        return this.transform.localScale.x; 
+    }
+    // private  IncreaseRangeCoroutine()
+    // {
+    //     float timeIncrease = 20f; 
+    // }
 }

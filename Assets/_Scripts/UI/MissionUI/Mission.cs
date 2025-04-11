@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using _Scripts.ObjectPooling;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,22 +14,19 @@ namespace _Scripts.UI.MissionUI
         public int amountItem;
         public EnumItem itemType;
         
-        private TMP_Text _text;
-        private Image image;
+        [SerializeField]private TMP_Text _text;
+        [SerializeField]private Image image;
 
 
-        private void Start()
+ 
+
+
+        public void SetData(MissionData missionData)
         {
-            _text = GetComponentInChildren<TMP_Text>();
-            image = transform.Find("Image").GetComponent<Image>();
-        }
-
-
-        public void SetData(MissionSO missionSo)
-        {
-            this.amountItem = missionSo.AmountItems;
+            this.amountItem = missionData.AmountItems;
+            this.itemType = missionData.ItemType;
             _text.text = this.amountItem.ToString();
-            image.sprite = missionSo.image;    
+            image.sprite = missionData.image;    
         }
 
         public void MinusItem(Vector3 positionMinus)
@@ -39,19 +37,39 @@ namespace _Scripts.UI.MissionUI
         private IEnumerator AddItemCoroutine(Vector3 positionMinus)
         {
             amountItem--;
+            amountItem = amountItem >= 0 ? amountItem : 0;
             
             
-            GameObject EffectMission = MissionPooling.Instance.spawnImage(image.sprite);
-            EffectMission.transform.position = 
+            GameObject EffectMission = MissionPooling.Instance.spawnImage();
+            
+            Vector3 screenPosition = UnityEngine.Camera.main.WorldToScreenPoint(positionMinus);
+            EffectMission.transform.position = screenPosition;
+
+            EffectMission.GetComponent<Image>().sprite = image.sprite;
+            EffectMission.SetActive(true);
             
             
             
             
-            yield return new WaitForSeconds(0.2f);
+            
+            // Using Dotween To move Object
+            
+            var sequence = DOTween.Sequence();
+            EffectMission.transform.localScale = new Vector3(1, 1, 1) * 1.2f;
+            sequence.Join(EffectMission.transform.DOMove(this.transform.position + new Vector3(0, 0.5f, 0), 1.5f));
+            sequence.Join(EffectMission.transform.DOScale(new Vector3(0.7f, 0.7f, 0.7f), 1.5f));
+            sequence.OnComplete(delegate
+            {
+                EffectMission.SetActive(false);
+                this._text.text = this.amountItem.ToString();
+            });
+         
+
+            yield return new WaitForSeconds(0.1f);
             // Add Pooling to create Image for it 
             
-            
-            
+
+
         }
     }
 }

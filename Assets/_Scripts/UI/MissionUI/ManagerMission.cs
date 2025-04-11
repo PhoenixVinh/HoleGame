@@ -11,7 +11,9 @@ namespace _Scripts.UI.MissionUI
         
         
         public GameObject Mission;
-        public List<MissionSO> MissionsSO;
+        
+        // Misition For One Level => Get next level using Addressable
+        public MissionSO MissionsSO;
         
         
         public Dictionary<EnumItem, Mission> TypeItems = new Dictionary<EnumItem, Mission>();
@@ -27,7 +29,7 @@ namespace _Scripts.UI.MissionUI
 
         private void CreateMissions()
         {
-            foreach (var missionSo in MissionsSO)
+            foreach (var missionSo in MissionsSO.misstionsData)
             {
                 GameObject mission = Instantiate(Mission, transform);
                 mission.name = "Mission";
@@ -37,10 +39,10 @@ namespace _Scripts.UI.MissionUI
         }
 
 
-        public void CheckAddItems(EnumItem itemType)
+        public void CheckMinusItems(EnumItem itemType, Vector3 position)
         {
-            if (!TypeItems.ContainsKey(itemType)) ;
-            TypeItems[itemType].MinusItem();
+            if (!TypeItems.ContainsKey(itemType)) return; ;
+            TypeItems[itemType].MinusItem(position);
         }
     }
 }

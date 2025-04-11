@@ -29,7 +29,7 @@ public class BlackHole : MonoBehaviour
 	}
 
 	public void MakeHole2D() {
-		int segments = 16; // You can adjust the number of segments for better/worse approximation
+		int segments = 16; 
 		Vector2[] points = new Vector2[segments];
 		float angleStep = 360f / segments;
 		float currentAngle = 0f;
@@ -50,6 +50,12 @@ public class BlackHole : MonoBehaviour
 		if (GenerateMesh != null) Destroy(GenerateMesh);
 		GenerateMesh = ground2DColider.CreateMesh(true, true);
 		GeneratedMeshColider.sharedMesh = GenerateMesh;
+		
+		
+		// Test make Collider under the Gameobject 
+		
+		
+		
 	}
 
 	public void changeInitialScale(float scale) {

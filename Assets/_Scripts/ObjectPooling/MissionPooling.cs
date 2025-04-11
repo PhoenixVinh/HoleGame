@@ -6,10 +6,10 @@ namespace _Scripts.ObjectPooling
 {
     public class MissionPooling : ObjectPoolingBase<MissionPooling>
     {
-        public GameObject spawnImage(Sprite sprite)
+        public GameObject spawnImage()
         {
             GameObject obj = this.GetPooledObject();
-            obj.GetComponent<Image>().sprite = sprite;
+            
             return obj;
         }
         

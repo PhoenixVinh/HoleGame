@@ -1,6 +1,7 @@
 
 using _Scripts.Event;
 using _Scripts.ObjectPooling;
+using _Scripts.UI.MissionUI;
 using UnityEngine;
 
 namespace _Scripts.Hole
@@ -16,6 +17,8 @@ namespace _Scripts.Hole
                 ItemEvent.OnAddScore?.Invoke(score);
                 
                 TextPooling.Instance.SpawnText(this.transform.position + Vector3.up*2 , score);
+                
+                ManagerMission.Instance.CheckMinusItems(other.gameObject.GetComponent<Item>().type, transform.position);
                 Destroy(other.gameObject);
             }
             

@@ -16,7 +16,7 @@ namespace _Scripts.Hole
                 int score = other.gameObject.GetComponent<Item>().score;
                 ItemEvent.OnAddScore?.Invoke(score);
                 
-                TextPooling.Instance.SpawnText(HoleController.Instance.transform.position, score);
+                TextPooling.Instance.SpawnText(HoleController.Instance.transform.position + Vector3.up * 2, score);
                 
                 ManagerMission.Instance.CheckMinusItems(other.gameObject.GetComponent<Item>().type, transform.position);
                 Destroy(other.gameObject);

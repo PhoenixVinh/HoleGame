@@ -5,6 +5,7 @@ using _Scripts.ObjectPooling;
 using TMPro;
 using UnityEngine;
 
+
 public class Score : MonoBehaviour
 {
     [Header(" Variables")]

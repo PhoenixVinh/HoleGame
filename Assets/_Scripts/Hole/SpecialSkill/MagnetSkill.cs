@@ -67,7 +67,17 @@ public class MagnetSkill : MonoBehaviour
             // Move Object to the Hole 
             if(obj == null) continue;
             float distance = Vector3.Distance(transform.position, obj.transform.position);
-            if (distance > radious + 0.1 || distance < 0.2f ) continue;
+            if (distance > radious + 0.1f)
+            {
+                if (obj.transform.localScale.x < item.Value.originScale.x)
+                {
+                    obj.transform.localScale /= 0.98f;
+                }
+                continue;
+            }
+            
+            
+            if (distance < 0.1f) continue;
             // Check distance of 
             Vector3 directionMovement = transform.position - obj.transform.position;
             directionMovement.Normalize();
@@ -81,41 +91,15 @@ public class MagnetSkill : MonoBehaviour
             
             
             // Scale Object
-            Vector3 minSacle = item.Value.originScale / 2;
+            Vector3 minSacle = item.Value.originScale / 1.5f;
             if (obj.transform.localScale.x > minSacle.x)
             {
-                obj.transform.localScale *= 0.96f;
+                obj.transform.localScale *= 0.98f;
             }
             
             
-            
-            
-            
-            // if (!item.Value.isSuction)
-            // {
-            //     Tween scacleTween = null; 
-            //     Vector3 orginalScale = item.Value.originScale;
-            //     scacleTween = obj.transform.DOScale(orginalScale / 1.5f, 0.5f).OnUpdate(
-            //         () =>
-            //         {
-            //             if(obj == null) scacleTween.Kill();
-            //          
-            //             if (Vector3.Distance(obj.transform.position, transform.position) > radious)
-            //             {
-            //                 scacleTween.Kill();
-            //
-            //                 
-            //                 obj.transform.DOScale(orginalScale, 0.2f);
-            //                 item.Value.SetBoolSuction(false);
-            //                 //item.Value.originScale = true;
-            //             }
-            //         }
-            //         
-            //     );
-            //     item.Value.SetBoolSuction(true);
-            // }
-            
         }
+
         
         
     }

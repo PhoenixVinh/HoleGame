@@ -23,9 +23,10 @@ public class HoleCenter : MonoBehaviour
         if (other.CompareTag("Item"))
         {
             
-            Item item  = other.GetComponent<Item>();
-            //Move to the center of Game Object 
-            StartCoroutine(MoveCenterCoroutine(item));
+            other.gameObject.layer = LayerMask.NameToLayer(LayerMaskVariable.NoCollision.ToString());
+            // Item item  = other.GetComponent<Item>();
+            // //Move to the center of Game Object 
+            // StartCoroutine(MoveCenterCoroutine(item));
             
            // other.gameObject.layer = LayerMask.NameToLayer(LayerMaskVariable.NoCollision.ToString());
         }
@@ -63,7 +64,7 @@ public class HoleCenter : MonoBehaviour
         if (other.CompareTag("Item"))
         {
             other.gameObject.layer = LayerMask.NameToLayer(LayerMaskVariable.Collision.ToString());
-            other.gameObject.GetComponent<Item>().InTheHole = false;
+            //other.gameObject.GetComponent<Item>().InTheHole = false;
         }
     }
 }

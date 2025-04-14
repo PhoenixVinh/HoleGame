@@ -3,8 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using _Scripts.Hole;
 using DG.Tweening;
-using Unity.VisualScripting;
-using UnityEditor.ShaderGraph.Internal;
+
 using UnityEngine;
 
 
@@ -31,7 +30,7 @@ public class HoleController : MonoBehaviour
     private HoleMovement _holeMovement;
     public HoleMovement HoleMovement => _holeMovement;
 
-    public BlackHole _blackHole;
+    //public BlackHole _blackHole;
 
 
     private HoleLevel _holeLevel;
@@ -44,7 +43,7 @@ public class HoleController : MonoBehaviour
     {
         Instance = this;
         _holeMovement = GetComponent<HoleMovement>();
-        _blackHole = GetComponent<BlackHole>();
+        //_blackHole = GetComponent<BlackHole>();
         _holeLevel = GetComponent<HoleLevel>();
         _holeSpecialSkill = GetComponent<HoleSpecialSkill>();
         SetData();
@@ -60,7 +59,7 @@ public class HoleController : MonoBehaviour
 
     public void OnUpLevelHole()
     {
-        this._blackHole.changeInitialScale(this.transform.localScale.x);
+       // this._blackHole.changeInitialScale(this.transform.localScale.x);
     }
 
 
